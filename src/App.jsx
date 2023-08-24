@@ -28,9 +28,8 @@ function Home() {
     <>
       <main>
         <div className="home-page">
-          
             <div className="container">
-            <img src="https://picsum.photos/200/300" alt="random" />
+            <img src="https://picsum.photos/200/300" style={{borderRadius: '20px'}}alt="random" />
             <h1>Welcome to My Page!</h1>
               <Button>
                 <Link to="/about">About</Link>
@@ -53,7 +52,7 @@ function About() {
             <div className="card">
                 <div className="card-background"></div>
                 <div className="profile-picture">
-                    <img src="/1468464029362.jpg" style={{ width: '31%', borderRadius: '20px' }} alt="Profile Picture" />
+                    <img src="/1468464029362.jpg" style={{ width: '31%', borderRadius: '20px' }} alt="Profile" />
                     <div className="flex-column">
                         <h2>Shiggy Diggy</h2>
                         <p>Web Developer</p>
@@ -66,15 +65,15 @@ function About() {
                         <li>Email: abc@abc.xyz</li>
                         <li>
                             <img src="/X_logo_2023.svg" style={{ width: '15px' }} alt="X Logo"></img>
-                                <a>: test123</a>
+                              : test123
                         </li>
                         <li>
                             <img src="/iconmonstr-linkedin-3.svg" style={{ width: '15px' }} alt="LinkedIn Logo"></img>
-                                <a>: test123</a>
+                              : test123
                         </li>
                         <li>
                             <img src="/GitHub_Invertocat_Logo.svg" style={{ width: '15px' }} alt="GitHub Logo"></img>
-                                <a>: test123</a>
+                              : test123
                         </li>
                     </ul>
                 </div>
