@@ -15,15 +15,46 @@ const StyledButton = styled.button`
 
   &:hover {
     background-color: rgb(227, 226, 223);
-    color: #fff;
+    color: #000;
   }
 `;
 
-function Button({ children }) {
-  return <StyledButton>{children}</StyledButton>;
+function Button({ children, onClick }) {
+  return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
 
+function Counter() {
+  const [counter, setCounter] = React.useState(0);
+  const CountDisplay = styled.div`
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+  `;
+
+  React.useEffect(() => {
+    document.title = `You clicked ${counter} times`;
+  }, [counter]);
+
+    return (
+    <div className="counter-page">
+      <div className="container">
+        <div className="flex-column">
+          <div className="flex-row">
+            <Button onClick={() => setCounter(counter + 1)}>+</Button>
+            <CountDisplay>{counter}</CountDisplay>
+            <Button onClick={() => setCounter(counter - 1)}>-</Button>
+          </div>
+          <Link to="/">Go back to home</Link>
+        </div>
+      </div>
+    </div>
+
+  );
+}
+
+
 function Home() {
+
   return (
     <>
       <main>
@@ -31,9 +62,14 @@ function Home() {
             <div className="container">
             <img src="https://picsum.photos/200/300" style={{borderRadius: '20px'}}alt="random" />
             <h1>Welcome to My Page!</h1>
+            <div className="flex-row">
               <Button>
                 <Link to="/about">About</Link>
               </Button>
+              <Button>
+                <Link to="/counter">Counter</Link>
+              </Button>
+              </div>
             </div>
           
         </div>
@@ -43,6 +79,27 @@ function Home() {
 }
 
 function About() {
+  const [textLink, setTextLink] = React.useState('Home');
+  const [dataProfile, setDataProfile] = React.useState({name: 'Shiggy Diggy', profession: 'Web Developer'});
+  const [skills, setSkills] = React.useState(['HTML', 'CSS', 'JavaScript', 'PHP', 'SQL']);
+
+  function handleClickProf() {
+    if (dataProfile.profession === 'Web Developer') {
+        setDataProfile({name: 'Shiggy Diggy', profession: 'Data Scientist'});
+    } else {
+        setDataProfile({name: 'Shiggy Diggy', profession: 'Web Developer'});
+    }
+  }
+  
+  function handleClickSkills() {
+    if (skills.length === 5) {
+        setSkills(['Python', 'R', 'Scala', 'Java']);
+    } // Swich back again to default
+    else {
+        setSkills(['HTML', 'CSS', 'JavaScript', 'PHP', 'SQL']);
+    }
+  }
+
   return (
     <>
       <main>
@@ -54,8 +111,12 @@ function About() {
                 <div className="profile-picture">
                     <img src="/1468464029362.jpg" style={{ width: '31%', borderRadius: '20px' }} alt="Profile" />
                     <div className="flex-column">
-                        <h2>Shiggy Diggy</h2>
-                        <p>Web Developer</p>
+                        <h2>
+                          {dataProfile.name}
+                        </h2>
+                        <p>
+                          {dataProfile.profession}
+                        </p>
                     </div>
                 </div>
                 <div className="contact-info">
@@ -80,16 +141,39 @@ function About() {
                 <div className="skills">
                     <h2>Skills</h2>
                     <ul>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>JavaScript</li>
-                        <li>PHP</li>
-                        <li>SQL</li>
+                        {skills.map((skill, index) => (
+                            <li key={index}>{skill}</li>
+                        ))}
                     </ul>
                     <h2>Links</h2>
                     <ul>
                         <li>
-                            <Link to="/">Home</Link>
+                            <Link to="/"
+                              onMouseEnter={() => {
+                                setTextLink('>> Home');
+                              }}
+                              onMouseLeave={() => {
+                                setTextLink('Home');
+                              }}
+                            >
+                              {textLink}
+                            </Link>
+                        </li>
+                        <li>
+                          <Link to="#"
+                           onClick={handleClickProf} 
+                           style={{ textDecoration: "underline", color: "blue", cursor: "pointer" }}
+                          >
+                            Switch Profession
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="#"
+                            onClick={handleClickSkills}
+                            style={{ textDecoration: "underline", color: "blue", cursor: "pointer" }}
+                          >
+                            Switch Skills
+                          </Link>
                         </li>
                     </ul>
                 </div>
@@ -108,6 +192,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/counter" element={<Counter />} />
         </Routes>
       </header>
     </div>
